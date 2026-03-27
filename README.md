@@ -1,5 +1,14 @@
 # Crisis Early Warning Model (TACE/ABCT)
 
+## Resumen ejecutivo
+Este trabajo desarrolla un sistema de alerta temprana de crisis bajo marco Austrian Business Cycle Theory (ABCT) usando un modelo Random Forest entrenado sobre tres capas de señales: Monetaria (estructura de tasas y politica de referencia), Activos (desacoples en mercado bursatil e inmobiliario) y Ahorro/Credito (fragilidad financiera e inflacion). La metodologia integra estas capas en un unico dataset mensual, define una etiqueta de crisis a 18 meses y valida temporalmente para evitar leakage y sobreajuste retrospectivo.
+
+La evidencia historica es consistente con el objetivo del modelo: en la crisis de 2008, la validacion Walk-Forward muestra capacidad de prediccion del 100% en la ventana critica principal (recall completo del episodio), lo que respalda que las señales construidas capturan el patron de expansion y ajuste propio de crisis sistemicas. A nivel global, el rendimiento varia por ciclo, pero se mantiene valor predictivo en episodios macro-financieros de alta relevancia.
+
+En el estado actual, la arquitectura final usa ensamble RF+GBM calibrado (cierre Isotonic vs Platt) con umbral operativo de 4%, seleccionado bajo criterio de sensibilidad (Recall minimo 0.70). Con este esquema, la lectura vigente permanece en zona de accion, por lo que se sostiene una postura de monitoreo reforzado y preparacion preventiva.
+
+Como cierre metodologico, se incorporo una inferencia extendida independiente de la etiqueta para proyectar riesgo hasta el ultimo mes con features completas desde fuentes crudas. Esta extension llevo la cobertura hasta 2025-09-01 y registro una probabilidad reciente de 29.51%, superior al umbral operativo del 4%. En terminos ejecutivos, esto confirma que la alerta no depende solo del corte historico de entrenamiento, sino que se mantiene activa tambien en la lectura mas actualizada del sistema.
+
 ## 1. Que es este proyecto
 Este proyecto construye un sistema de alerta temprana de crisis economicas basado en la Teoria Austriaca del Ciclo Economico (TACE/ABCT). La idea central es detectar, con horizonte de 18 meses, cuando una economia se acerca a una fase de crisis/ajuste luego de una etapa de expansion crediticia y mala asignacion de capital.
 
@@ -218,12 +227,3 @@ Dependencias principales:
 - Monitoreo mensual con backtesting en rolling window.
 
 ---
-
-## Resumen ejecutivo (4 parrafos)
-Este trabajo desarrolla un sistema de alerta temprana de crisis bajo marco TACE/ABCT usando un modelo Random Forest entrenado sobre tres capas de señales: Monetaria (estructura de tasas y politica de referencia), Activos (desacoples en mercado bursatil e inmobiliario) y Ahorro/Credito (fragilidad financiera e inflacion). La metodologia integra estas capas en un unico dataset mensual, define una etiqueta de crisis a 18 meses y valida temporalmente para evitar leakage y sobreajuste retrospectivo.
-
-La evidencia historica es consistente con el objetivo del modelo: en la crisis de 2008, la validacion Walk-Forward muestra capacidad de prediccion del 100% en la ventana critica principal (recall completo del episodio), lo que respalda que las señales construidas capturan el patron de expansion y ajuste propio de crisis sistemicas. A nivel global, el rendimiento varia por ciclo, pero se mantiene valor predictivo en episodios macro-financieros de alta relevancia.
-
-En el estado actual, la arquitectura final usa ensamble RF+GBM calibrado (cierre Isotonic vs Platt) con umbral operativo de 4%, seleccionado bajo criterio de sensibilidad (Recall minimo 0.70). Con este esquema, la lectura vigente permanece en zona de accion, por lo que se sostiene una postura de monitoreo reforzado y preparacion preventiva.
-
-Como cierre metodologico, se incorporo una inferencia extendida independiente de la etiqueta para proyectar riesgo hasta el ultimo mes con features completas desde fuentes crudas. Esta extension llevo la cobertura hasta 2025-09-01 y registro una probabilidad reciente de 29.51%, superior al umbral operativo del 4%. En terminos ejecutivos, esto confirma que la alerta no depende solo del corte historico de entrenamiento, sino que se mantiene activa tambien en la lectura mas actualizada del sistema.
