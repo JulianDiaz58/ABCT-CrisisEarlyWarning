@@ -168,6 +168,22 @@ Lectura operativa de la mejora:
 ### 7.2 Evidencia puntual 2008
 En ventanas walk-forward asociadas a la crisis subprime, el modelo alcanzo deteccion completa del episodio en terminos de recall (1.00 en la ventana central 2007-12 a 2008-11), mostrando capacidad para capturar senales de crisis sistemica en ese ciclo.
 
+### 7.4 Ablation test de variables con interpretacion discutible
+Como validacion metodologica adicional, se corrio un ablation test en `modelo.ipynb` para evaluar si ciertas familias de variables con mezcla de unidades estaban perjudicando el modelo:
+
+- `busloans_psavert_ratio*`
+- `ussthpi_gold_ratio*`
+- `nasdaq_gold_ratio*`
+
+Configuraciones comparadas (mismo pipeline RF+GBM calibrado con Platt):
+- Baseline (22 features): AUC-PR = 0.0779, Brier = 0.1110, Precision_sel = 0.1075, Recall_sel = 1.00.
+- Ablation limpio (10 features): AUC-PR = 0.0684, Brier = 0.1164, Precision_sel = 0.1020, Recall_sel = 1.00.
+
+Lectura tecnica:
+- El set limpio mejora interpretabilidad economica, pero en esta corrida pierde algo de desempeno predictivo y calibracion.
+- Por eso, el trabajo no queda invalidado por esas variables; mas bien muestran aporte de senal en el setup actual.
+- Siguiente paso recomendado: reemplazo economico de esas razones (no solo eliminacion), por ejemplo `BUSLOANS/GDP` y `USSTHPI` deflactado por `CPI/PCE`.
+
 ---
 
 ## 8. Seleccion automatica de umbral de alerta
