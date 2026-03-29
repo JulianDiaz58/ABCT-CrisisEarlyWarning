@@ -145,6 +145,14 @@ El notebook evalua en varias capas:
 - Tabla de metricas por umbral
 - Walk-Forward (ventana expansiva, test anual)
 
+### 7.1 Hallazgos relevantes
+- `spread_yield_curve` aparece como variable dominante, consistente con la logica TACE.
+- La curva historica de probabilidad detecta episodios criticos clasicos (incluyendo 2008).
+- La validacion walk-forward muestra desempeno heterogeneo por ciclo, lo cual es esperable en procesos macro de largo plazo.
+
+### 7.2 Evidencia puntual 2008
+En ventanas walk-forward asociadas a la crisis subprime, el modelo alcanzo deteccion completa del episodio en terminos de recall (1.00 en la ventana central 2007-12 a 2008-11), mostrando capacidad para capturar senales de crisis sistemica en ese ciclo.
+
 ### 7.3 Mejoras implementadas sobre el modelo base
 Se implementaron dos mejoras directas en `modelo.ipynb`:
 
@@ -159,14 +167,6 @@ Comparativa en test set (respecto al RF base):
 Lectura operativa de la mejora:
 - A umbral operativo del 6%, el ensamble calibrado logra `Recall = 1.00` en el test actual (con precision baja, consistente con una estrategia que prioriza sensibilidad).
 - La probabilidad actual con ensamble calibrado queda en 46.67%, por encima del umbral operativo.
-
-### 7.1 Hallazgos relevantes
-- `spread_yield_curve` aparece como variable dominante, consistente con la logica TACE.
-- La curva historica de probabilidad detecta episodios criticos clasicos (incluyendo 2008).
-- La validacion walk-forward muestra desempeno heterogeneo por ciclo, lo cual es esperable en procesos macro de largo plazo.
-
-### 7.2 Evidencia puntual 2008
-En ventanas walk-forward asociadas a la crisis subprime, el modelo alcanzo deteccion completa del episodio en terminos de recall (1.00 en la ventana central 2007-12 a 2008-11), mostrando capacidad para capturar senales de crisis sistemica en ese ciclo.
 
 ### 7.4 Ablation test de variables con interpretacion discutible
 Como validacion metodologica adicional, se corrio un ablation test en `modelo.ipynb` para evaluar si ciertas familias de variables con mezcla de unidades estaban perjudicando el modelo:
